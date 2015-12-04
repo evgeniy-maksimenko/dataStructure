@@ -5,12 +5,33 @@ import java.util.Arrays;
 public class Main {
 
     public static void main(String[] args) {
-        BsTree theTree = new BsTree();
-        theTree.init(new int[] {123,54,6,6,778,234,45,5,7,878,45});
-        System.out.println(Arrays.toString(theTree.toArray()));
-        theTree.reverse();
-        System.out.println(Arrays.toString(theTree.toArray()));
-        System.out.println("");
-        theTree.print();
+        AList1 theList = new AList1();
+        theList.init(new int[] {});
+        System.out.println(theList.size());
+        theList.addStart(10);
+        theList.addStart(20);
+        theList.set(0,444);
+//        theList.addStart(20);
+//
+
+//        theList.addEnd(100);
+//        theList.addEnd(200);
+
+
+//        theList.addPos(1, 1000);
+//        theList.delStart();
+//        theList.delPos(1);
+//        theList.delEnd();
+
+//        System.out.println("min = "+theList.min());
+//        System.out.println("max = "+theList.max());
+//        System.out.println("maxIndex = "+theList.maxIndex());
+//        System.out.println("minIndex = "+theList.minIndex());
+        System.out.println(Arrays.toString(theList.toArray()));
+//        theList.reverse();
+//        System.out.println(Arrays.toString(theList.toArray()));
+//        System.out.println(Arrays.toString(theList.toArray()));
+//        System.out.println("");
+
     }
 }

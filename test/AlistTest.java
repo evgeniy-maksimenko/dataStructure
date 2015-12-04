@@ -1,5 +1,6 @@
 import gontsov.AList0;
 import gontsov.AList1;
+import gontsov.AList2;
 import gontsov.EList;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -18,7 +19,8 @@ public class AlistTest {
     public static Collection primeNumbers() {
         return Arrays.asList(new Object[][]{
                 {new AList0()},
-                {new AList1()}
+                {new AList1()},
+                {new AList2()}
         });
     }
 
