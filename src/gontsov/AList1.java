@@ -1,5 +1,6 @@
 package gontsov;
 
+import java.util.Arrays;
 import java.util.Iterator;
 
 public class AList1 implements EList, Iterable<Integer> {
@@ -167,8 +168,20 @@ public class AList1 implements EList, Iterable<Integer> {
 
     @Override
     public void addPos(int pos, int val) {
-        //TODO
+        top++;
+        int[] arrPartCopy = new int[top];
+        for (int i = 0; i < top; i++) {
+            if(i==pos)
+                arrPartCopy[i] = val;
+            if(i<pos)
+                arrPartCopy[i] = list[i];
+            if(i>pos)
+                arrPartCopy[i] = list[i-1];
+        }
 
+        for (int i = 0; i < top; i++) {
+            list[i] = arrPartCopy[i];
+        }
     }
 
     @Override

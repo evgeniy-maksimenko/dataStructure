@@ -5,11 +5,13 @@ import java.util.Arrays;
 public class Main {
 
     public static void main(String[] args) {
-        AList2 theList = new AList2();
-        theList.init(new int[]{700,100});
+        AList1 theList = new AList1();
+        theList.init(new int[]{100,200,300,400,500});
+
+        theList.addPos(2,10);
         System.out.println(theList.size());
-        System.out.println(theList.delPos(0));
-        System.out.println(theList.size());
+        System.out.println(Arrays.toString(theList.toArray()));
+
 
 //        theList.addStart(20);
 //
@@ -29,7 +31,7 @@ public class Main {
 //        System.out.println("minIndex = "+theList.minIndex());
 //        System.out.println(Arrays.toString(theList.toArray()));
 //        theList.reverse();
-//        System.out.println(Arrays.toString(theList.toArray()));
+
 //        System.out.println(Arrays.toString(theList.toArray()));
 //        System.out.println("");
 
