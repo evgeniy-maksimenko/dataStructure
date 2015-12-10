@@ -178,13 +178,24 @@ public class AList2 implements EList {
     public void halfRevers() {
         if(size() == 0)
             throw new IllegalArgumentException();
-        int halfArray = end / 2;
-        int next = halfArray + end % 2;
-        for (int i = start; i < halfArray; i++) {
-            int temp = list[i];
-            list[i] = list[i + next];
-            list[i + next] = temp;
+        int halfArray = size() / 2;
+        int half = size() / 2;
+        for(int i = 0; i < half; i++)
+        {
+            if( size() % 2 == 0)
+            {
+                int tmp = list[start + i];
+                list[start + i] = list[start + half + i];
+                list[start + half + i]= tmp;
+            }
+            else
+            {
+                int tmp = list[start + i];
+                list[start + i] = list[start + half + i + 1];
+                list[start + half + i + 1 ]= tmp;
+            }
         }
+
     }
 
     @Override
