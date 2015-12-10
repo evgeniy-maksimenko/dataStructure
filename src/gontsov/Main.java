@@ -5,12 +5,10 @@ import java.util.Arrays;
 public class Main {
 
     public static void main(String[] args) {
-        AList1 theList = new AList1();
-        theList.init(new int[] {});
+        AList2 theList = new AList2();
+        theList.init(new int[] {1,2,3,4,5,6});
         System.out.println(theList.size());
-        theList.addStart(10);
-        theList.addStart(20);
-        theList.set(0,444);
+
 //        theList.addStart(20);
 //
 

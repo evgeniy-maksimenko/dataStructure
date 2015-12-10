@@ -4,7 +4,7 @@ import java.util.Arrays;
 
 public class AList2 implements EList {
 
-    public int[] list = new int[]{};
+    int[] list = new int[20];
     public int start;
     public int end;
 
@@ -72,9 +72,14 @@ public class AList2 implements EList {
 
     @Override
     public void init(int[] ini) {
-        int[] arrCopy = new int[ini.length];
-        start = end = ini.length/2;
-        list = arrCopy;
+        clear();
+        if(ini == null)
+            ini = new int[0];
+        start = start - ini.length/2;
+        for (int i = 0; i < ini.length; i++) {
+            list[start+i] = ini[i];
+        }
+        end = start + ini.length;
     }
 
     @Override
