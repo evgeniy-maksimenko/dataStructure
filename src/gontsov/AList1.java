@@ -20,14 +20,14 @@ public class AList1 implements EList, Iterable<Integer> {
 
     @Override
     public void set(int index, int element) {
-        if (list == null || list.length == 0)
+        if (size() == 0)
             throw new IllegalArgumentException();
         list[index] = element;
     }
 
     @Override
     public int get(int index) {
-        if (list == null || list.length == 0)
+        if (size() == 0)
             throw new IllegalArgumentException();
         return list[index];
     }
@@ -50,7 +50,7 @@ public class AList1 implements EList, Iterable<Integer> {
 
     @Override
     public int min() {
-        if (list == null || list.length == 0)
+        if (size() == 0)
             throw new IllegalArgumentException();
         int min = list[0];
         for (int i = 0; i < top; i++) {
@@ -62,7 +62,7 @@ public class AList1 implements EList, Iterable<Integer> {
 
     @Override
     public int max() {
-        if (list == null || list.length == 0)
+        if (size() == 0)
             throw new IllegalArgumentException();
         int min = list[0];
         for (int i = 0; i < top; i++) {
@@ -74,7 +74,7 @@ public class AList1 implements EList, Iterable<Integer> {
 
     @Override
     public int minIndex() {
-        if (list == null || list.length == 0)
+        if (size() == 0)
             throw new IllegalArgumentException();
         int minIndex = 0;
         for (int i = 0; i < top; i++) {
@@ -86,7 +86,7 @@ public class AList1 implements EList, Iterable<Integer> {
 
     @Override
     public int maxIndex() {
-        if (list == null || list.length == 0)
+        if (size() == 0)
             throw new IllegalArgumentException();
         int minIndex = 0;
         for (int i = 0; i < top; i++) {
@@ -99,20 +99,47 @@ public class AList1 implements EList, Iterable<Integer> {
 
     @Override
     public void sort() {
-        if (list == null || list.length == 0)
+        if (size() == 0)
             throw new IllegalArgumentException();
+
+        int out, in;
+        for (out = 0; out < top; out++) {
+            for (in = 0; in < top; in++) {
+                if (list[in] > list[out]) {
+                    int tmp = list[in];
+                    list[in] = list[out];
+                    list[out] = tmp;
+                }
+            }
+        }
 
     }
 
 
     @Override
     public void reverse() {
+        if (size() == 0)
+            throw new IllegalArgumentException();
 
+        for (int i = 0; i < top / 2; i++) {
+            int tmp = list[i];
+            list[i] = list[top - i - 1];
+            list[top - i - 1] = tmp;
+        }
     }
 
     @Override
     public void halfRevers() {
+        if (size() == 0)
+            throw new IllegalArgumentException();
 
+        int halfArray = top / 2;
+        int next = halfArray + top % 2;
+        for (int i = 0; i < halfArray; i++) {
+            int temp = list[i];
+            list[i] = list[i + next];
+            list[i + next] = temp;
+        }
     }
 
     public void init(int[] ini) {
@@ -139,27 +166,14 @@ public class AList1 implements EList, Iterable<Integer> {
     }
 
     @Override
-    public void addPos(int index, int item) {
-        for (int i = this.top; i > 0; --i) {
-            if (i < index) {
-                this.list[i] = this.list[i];
-            }
-
-            if (i == index) {
-                this.list[i] = item;
-                ++this.top;
-            }
-
-            if (i > index) {
-                this.list[i] = this.list[i - 1];
-            }
-        }
+    public void addPos(int pos, int val) {
+        //TODO
 
     }
 
     @Override
     public int delStart() {
-        if (list == null || list.length == 0)
+        if (size() == 0)
             throw new IllegalArgumentException();
         int delElement = this.list[0];
 
@@ -173,13 +187,16 @@ public class AList1 implements EList, Iterable<Integer> {
 
     @Override
     public int delEnd() {
+        if (size() == 0)
+            throw new IllegalArgumentException();
+
         return this.list[--this.top];
     }
 
     @Override
     public int delPos(int index) {
-        if (index > size())
-            throw new ArrayIndexOutOfBoundsException();
+        if (size() == 0)
+            throw new IllegalArgumentException();
 
         int res = 0;
 
@@ -199,7 +216,7 @@ public class AList1 implements EList, Iterable<Integer> {
     }
 
     private void exception(int[] array) {
-        if (array == null || array.length == 0)
+        if (size() == 0)
             throw new IllegalArgumentException();
     }
 

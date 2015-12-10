@@ -74,14 +74,13 @@ public class AList0 implements EList, Iterable<Integer> {
     @Override
     public int maxIndex() {
         exception(list);
-        int result = list[0];
-        int index = 0;
+
+        int minIndex = 0;
         for (int i = 0; i < list.length; i++) {
-            if (list[i] > result) {
-                index = i;
-            }
+            if(list[i] > list[minIndex])
+                minIndex = i;
         }
-        return index;
+        return minIndex;
     }
 
     @Override
@@ -240,8 +239,7 @@ public class AList0 implements EList, Iterable<Integer> {
 
     @Override
     public int delPos(int index) {
-        if (index > size())
-            throw new ArrayIndexOutOfBoundsException();
+        exception(list);
 
         exception(list);
         int delElement = list[index];

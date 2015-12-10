@@ -250,10 +250,10 @@ public class AlistTest {
         assertArrayEquals(new int[]{}, aList.toArray());
     }
 
-    @Test (expected = ArrayIndexOutOfBoundsException.class)
+    @Test (expected = IllegalArgumentException.class)
     public void testDelPos5() {
-        aList.init(new int[]{700});
-        assertEquals(1, aList.size());
+        aList.init(new int[]{});
+        assertEquals(0, aList.size());
         int Actual = aList.delPos(2);
     }
 
@@ -395,7 +395,7 @@ public class AlistTest {
     @Test
     public void testMaxIndex1() {
         aList.init(new int[]{120, 340, 292, 33, 24});
-        assertEquals(2, aList.maxIndex());
+        assertEquals(1, aList.maxIndex());
     }
 
     @Test

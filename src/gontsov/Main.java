@@ -6,7 +6,9 @@ public class Main {
 
     public static void main(String[] args) {
         AList2 theList = new AList2();
-        theList.init(new int[] {1,2,3,4,5,6});
+        theList.init(new int[]{700,100});
+        System.out.println(theList.size());
+        System.out.println(theList.delPos(0));
         System.out.println(theList.size());
 
 //        theList.addStart(20);
@@ -25,7 +27,7 @@ public class Main {
 //        System.out.println("max = "+theList.max());
 //        System.out.println("maxIndex = "+theList.maxIndex());
 //        System.out.println("minIndex = "+theList.minIndex());
-        System.out.println(Arrays.toString(theList.toArray()));
+//        System.out.println(Arrays.toString(theList.toArray()));
 //        theList.reverse();
 //        System.out.println(Arrays.toString(theList.toArray()));
 //        System.out.println(Arrays.toString(theList.toArray()));
