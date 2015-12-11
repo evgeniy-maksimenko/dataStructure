@@ -1,7 +1,4 @@
-import gontsov.AList0;
-import gontsov.AList1;
-import gontsov.AList2;
-import gontsov.EList;
+import gontsov.*;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
@@ -20,7 +17,9 @@ public class AlistTest {
         return Arrays.asList(new Object[][]{
                 {new AList0()},
                 {new AList1()},
-                {new AList2()}
+                {new AList2()},
+                {new LinkedList()},
+                {new DoublyLinkedList()}
         });
     }
 

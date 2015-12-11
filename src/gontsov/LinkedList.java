@@ -1,6 +1,6 @@
 package gontsov;
 
-public class LinkedList {
+public class LinkedList implements EList {
     class Link {
         public int val;
 
@@ -15,28 +15,213 @@ public class LinkedList {
         }
     }
 
-    public Link first;
+    private Link first;
+    private Link last;
 
-    public void insertFirst(int val) {
+    @Override
+    public void addStart(int val) {
         Link newLink = new Link(val);
+        if (isEmpty())
+            last = newLink;
         newLink.next = first;
         first = newLink;
     }
 
-    public Link deleteFirst() {
+    @Override
+    public void addEnd(int val) {
+        Link newLink = new Link(val);
+        if (isEmpty())
+            first = newLink;
+        else
+            last.next = newLink;
+        last = newLink;
+    }
+
+    @Override
+    public void addPos(int pos, int val) {
+        int k=0;
+        Link current = first;
+        while (current != null) {
+
+            k++;
+            current = current.next;
+        }
+    }
+
+    @Override
+    public int delStart() {
+        if (isEmpty())
+            throw new IllegalArgumentException();
         Link temp = first;
         first = first.next;
-        return temp;
+        return temp.val;
     }
 
     public void displayList() {
-        System.out.print("List (first-->last): ");
         Link current = first;
         while (current != null) {
             current.displayLink();
             current = current.next;
         }
-        System.out.println("");
+    }
+
+    @Override
+    public int delEnd() {
+        if (isEmpty())
+            throw new IllegalArgumentException();
+        return 0;
+    }
+
+    @Override
+    public int delPos(int pos) {
+        if (isEmpty())
+            throw new IllegalArgumentException();
+
+        return 0;
+    }
+
+    @Override
+    public int size() {
+        int i = 0;
+        Link current = first;
+        while (current != null) {
+            current = current.next;
+            i++;
+        }
+        return i;
+    }
+
+    @Override
+    public void clear() {
+        first = null;
+    }
+
+    @Override
+    public void init(int[] ini) {
+        clear();
+        for (int i = ini.length - 1; i >= 0; i--) {
+            addStart(ini[i]);
+        }
+    }
+
+    @Override
+    public int[] toArray() {
+
+        AList0 list = new AList0();
+
+        Link current = first;
+        while (current != null) {
+            list.addEnd(current.val);
+            current = current.next;
+        }
+
+        return list.toArray();
+    }
+
+    @Override
+    public void set(int pos, int val) {
+        if (isEmpty())
+            throw new IllegalArgumentException();
+
+        int k=0;
+        Link current = first;
+        while (current != null) {
+            if(k == pos)
+            {
+                current.val = val;
+                return;
+            }
+            k++;
+            current = current.next;
+        }
+    }
+
+    @Override
+    public int get(int pos) {
+        if (isEmpty())
+            throw new IllegalArgumentException();
+
+        int res = 0;
+        int k=0;
+        Link current = first;
+        while (current != null) {
+            if(k == pos)
+                res = current.val;
+            k++;
+            current = current.next;
+        }
+
+        return res;
+    }
+
+    @Override
+    public int min() {
+        if (isEmpty())
+            throw new IllegalArgumentException();
+
+        Link current = first;
+        int min = current.val;
+        while (current != null) {
+            if (min > current.val)
+                min = current.val;
+            current = current.next;
+        }
+
+        return min;
+    }
+
+    @Override
+    public int max() {
+        if (isEmpty())
+            throw new IllegalArgumentException();
+
+        Link current = first;
+        int max = current.val;
+        while (current != null) {
+            if (max < current.val)
+                max = current.val;
+            current = current.next;
+        }
+
+        return max;
+    }
+
+    @Override
+    public int minIndex() {
+        if (isEmpty())
+            throw new IllegalArgumentException();
+
+
+
+        return 0;
+    }
+
+    @Override
+    public int maxIndex() {
+        if (isEmpty())
+            throw new IllegalArgumentException();
+
+
+
+        return 0;
+    }
+
+    @Override
+    public void reverse() {
+        if (isEmpty())
+            throw new IllegalArgumentException();
+    }
+
+    @Override
+    public void halfRevers() {
+        if (isEmpty())
+            throw new IllegalArgumentException();
+    }
+
+    @Override
+    public void sort() {
+        if (isEmpty())
+            throw new IllegalArgumentException();
     }
 
     public boolean isEmpty() {

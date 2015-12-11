@@ -5,12 +5,13 @@ import java.util.Arrays;
 public class Main {
 
     public static void main(String[] args) {
-        AList1 theList = new AList1();
-        theList.init(new int[]{100,200,300,400,500});
-
-        theList.addPos(2,10);
+        DoublyLinkedList theList = new DoublyLinkedList();
+        theList.init(new int[]{700,100,800});
+        theList.delPos(2);
         System.out.println(theList.size());
         System.out.println(Arrays.toString(theList.toArray()));
+
+
 
 
 //        theList.addStart(20);

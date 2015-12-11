@@ -1,6 +1,6 @@
 package gontsov;
 
-public class DoublyLinkedList {
+public class DoublyLinkedList implements EList {
     class Link {
         public Link next;
         public Link previous;
@@ -31,7 +31,7 @@ public class DoublyLinkedList {
     public void addEnd(int val) {
         Link newLink = new Link(val);
         if (first == null) {
-            last = newLink;
+            first = newLink;
         } else {
             newLink.previous = last;
             last.next = newLink;
@@ -39,94 +39,227 @@ public class DoublyLinkedList {
         last = newLink;
     }
 
-    public Link delStart() {
+    @Override
+    public void addPos(int pos, int val) {
+        int k = 0;
+        Link current = first;
+        Link newLink = new Link(val);
+        if(pos == 0) {
+            addStart(val);
+        }
+        while (current != null && pos != 0) {
+            if (pos == k) {
+                current.previous.next = newLink;
+                newLink.next = current;
+                newLink.previous = current.previous;
+                current.previous = newLink;
+            }
+            k++;
+            current = current.next;
+        }
+    }
+
+    public int delStart() {
+        if (isEmpty())
+            throw new IllegalArgumentException();
         Link temp = first;
         if (first.next == null)
             last = null;
         else
             first.next.previous = null;
         first = first.next;
-        return temp;
+        return temp.val;
     }
 
     public boolean isEmpty() {
         return first == null;
     }
 
-    public Link deleteLast() {
+    public int delEnd() {
+
+        if (isEmpty())
+            throw new IllegalArgumentException();
         Link temp = last;
         if (first.next == null)
             first = null;
         else
             last.previous.next = null;
         last = last.previous;
-        return temp;
+        return temp.val;
     }
 
-    public void displayForward() {
+    @Override
+    public int delPos(int pos) {
+        if (isEmpty())
+            throw new IllegalArgumentException();
+
+        int k = 0;
+        int res = get(pos);
         Link current = first;
-        System.out.print("List (first-->last): ");
+        if(pos == k) {
+            delStart();
+        }
+        if(pos == size() - 1) {
+            delEnd();
+        }
+        while (current != null && pos != 0) {
+            if(k == pos)
+            {
+                current.previous.next = current.next;
+                current.next.previous = current.previous;
+            }
+            k++;
+            current = current.next;
+        }
+
+        return res;
+    }
+
+    @Override
+    public int size() {
+        int i = 0;
+        Link current = first;
         while (current != null) {
-            current.displayLink();
             current = current.next;
+            i++;
         }
-        System.out.println("");
+        return i;
     }
 
-    public void displayBackward() {
-        Link current = last;
-        System.out.print("List (last-->first): ");
+    @Override
+    public void clear() {
+        first = null;
+        last = null;
+    }
+
+    @Override
+    public void init(int[] ini) {
+        clear();
+        for (int i = ini.length - 1; i >= 0; i--) {
+            addStart(ini[i]);
+        }
+    }
+
+    @Override
+    public int[] toArray() {
+        AList0 list = new AList0();
+        Link current = first;
         while (current != null) {
-            current.displayLink();
-            current = current.previous;
+            list.addEnd(current.val);
+            current = current.next;
         }
-        System.out.println("");
+        return list.toArray();
     }
 
-    public boolean insertAfter(int key, int val) {
+    @Override
+    public void set(int pos, int val) {
+
+        if (isEmpty())
+            throw new IllegalArgumentException();
+
+
+        int res = 0;
+        int k = 0;
         Link current = first;
-        while (current.val != key) {
+        while (current != null) {
+            if (k == pos) {
+                current.val = val;
+                return;
+            }
+
+            k++;
             current = current.next;
-            if (current == null)
-                return false;
         }
 
-        Link newLink = new Link(val);
-        if (current == last) {
-            newLink.next = null;
-            last = newLink;
-        } else {
-            current.next.previous = newLink;
-            newLink.next = current.next;
-        }
-
-        newLink.previous = current;
-        current.next = newLink;
-
-        return true;
     }
 
-    public Link deleteKey(int key) {
+    @Override
+    public int get(int pos) {
+
+        if (isEmpty())
+            throw new IllegalArgumentException();
+
+        int res = 0;
+        int k = 0;
         Link current = first;
-        while (current.val != key) {
+        while (current != null) {
+            if (k == pos)
+                res = current.val;
+            k++;
             current = current.next;
-            if (current == null)
-                return null;
+        }
+        return res;
+    }
+
+    @Override
+    public int min() {
+        if (isEmpty())
+            throw new IllegalArgumentException();
+
+        Link current = first;
+        int min = current.val;
+        while (current != null) {
+            if (min > current.val)
+                min = current.val;
+            current = current.next;
         }
 
-        if (current == first) {
-            first = current.next;
-        } else {
-            current.previous.next = current.next;
+        return min;
+    }
+
+    @Override
+    public int max() {
+        if (isEmpty())
+            throw new IllegalArgumentException();
+
+        Link current = first;
+        int max = current.val;
+        while (current != null) {
+            if (max < current.val)
+                max = current.val;
+            current = current.next;
         }
 
-        if (current == last) {
-            last = current.previous;
-        } else {
-            current.next.previous = current.previous;
-        }
+        return max;
+    }
+
+    @Override
+    public int minIndex() {
+        if (isEmpty())
+            throw new IllegalArgumentException();
+
+        return 0;
+    }
+
+    @Override
+    public int maxIndex() {
+        if (isEmpty())
+            throw new IllegalArgumentException();
+
+        return 0;
+    }
+
+    @Override
+    public void reverse() {
+
+        if (isEmpty())
+            throw new IllegalArgumentException();
+
+    }
+
+    @Override
+    public void halfRevers() {
+
+        if (isEmpty())
+            throw new IllegalArgumentException();
+
+    }
+
+    @Override
+    public void sort() {
+        if (isEmpty())
+            throw new IllegalArgumentException();
 
 
-        return current;
     }
 }
