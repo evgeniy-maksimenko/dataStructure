@@ -228,7 +228,21 @@ public class DoublyLinkedList implements EList {
         if (isEmpty())
             throw new IllegalArgumentException();
 
-        return 0;
+        Link current = first;
+        int min = current.val;
+        int k = 0;
+        int minIndex = k;
+        while (current != null) {
+            if (min > current.val){
+                min = current.val;
+                minIndex = k;
+            }
+            k++;
+            current = current.next;
+        }
+
+
+        return minIndex;
     }
 
     @Override
@@ -236,7 +250,21 @@ public class DoublyLinkedList implements EList {
         if (isEmpty())
             throw new IllegalArgumentException();
 
-        return 0;
+        Link current = first;
+        int max = current.val;
+        int k = 0;
+        int maxIndex = k;
+        while (current != null) {
+            if (max < current.val) {
+                max = current.val;
+                maxIndex = k;
+            }
+            k++;
+            current = current.next;
+        }
+
+
+        return maxIndex;
     }
 
     @Override

@@ -5,9 +5,9 @@ import java.util.Arrays;
 public class Main {
 
     public static void main(String[] args) {
-        DoublyLinkedList theList = new DoublyLinkedList();
+        LinkedList theList = new LinkedList();
         theList.init(new int[]{700,100,800});
-        theList.delPos(2);
+        System.out.println(theList.delPos(3));
         System.out.println(theList.size());
         System.out.println(Arrays.toString(theList.toArray()));
 

@@ -39,10 +39,18 @@ public class LinkedList implements EList {
 
     @Override
     public void addPos(int pos, int val) {
-        int k=0;
+        int k = 0;
         Link current = first;
-        while (current != null) {
-
+        Link newLink = new Link(val);
+        if(pos == 0)
+        {
+            addStart(val);
+        }
+        while (current != null && pos != 0) {
+            if(k == pos - 1) {
+                newLink.next = current.next;
+                current.next = newLink;
+            }
             k++;
             current = current.next;
         }
@@ -69,13 +77,37 @@ public class LinkedList implements EList {
     public int delEnd() {
         if (isEmpty())
             throw new IllegalArgumentException();
-        return 0;
+
+        int res = 0;
+        Link current = first;
+
+        if(current.next == null){
+            res = current.val;
+            first = null;
+            clear();
+            return res;
+        }
+        else {
+            while (current != null) {
+                if(current.next.next == null){
+                    res = current.next.val;
+                    current.next = null;
+                    return res;
+                }
+                current = current.next;
+            }
+        }
+
+
+        return res;
     }
 
     @Override
     public int delPos(int pos) {
         if (isEmpty())
             throw new IllegalArgumentException();
+
+
 
         return 0;
     }
@@ -192,8 +224,21 @@ public class LinkedList implements EList {
             throw new IllegalArgumentException();
 
 
+        Link current = first;
+        int min = current.val;
+        int k = 0;
+        int minIndex = k;
+        while (current != null) {
+            if (min > current.val) {
+                min = current.val;
+                minIndex = k;
+            }
+            k++;
+            current = current.next;
+        }
 
-        return 0;
+
+        return minIndex;
     }
 
     @Override
@@ -201,9 +246,20 @@ public class LinkedList implements EList {
         if (isEmpty())
             throw new IllegalArgumentException();
 
+        Link current = first;
+        int max = current.val;
+        int k = 0;
+        int maxIndex = k;
+        while (current != null) {
+            if (max < current.val){
+                max = current.val;
+                maxIndex = k;
+            }
+            k++;
+            current = current.next;
+        }
 
-
-        return 0;
+        return maxIndex;
     }
 
     @Override
