@@ -107,9 +107,26 @@ public class LinkedList implements EList {
         if (isEmpty())
             throw new IllegalArgumentException();
 
+        int k = 0;
+        int res = k;
+        Link current = first;
+        if(pos == k)
+        {
+            res = current.val;
+            delStart();
+            return res;
+        }
+        while (current != null) {
+            if( k == pos - 1) {
+                res = current.next.val;
+                current.next = current.next.next;
+                return res;
+            }
+            k++;
+            current = current.next;
+        }
 
-
-        return 0;
+        return res;
     }
 
     @Override

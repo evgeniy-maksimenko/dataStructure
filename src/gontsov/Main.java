@@ -6,8 +6,8 @@ public class Main {
 
     public static void main(String[] args) {
         LinkedList theList = new LinkedList();
-        theList.init(new int[]{700,100,800});
-        System.out.println(theList.delPos(3));
+        theList.init(new int[]{700});
+        System.out.println(theList.delPos(0));
         System.out.println(theList.size());
         System.out.println(Arrays.toString(theList.toArray()));
 
