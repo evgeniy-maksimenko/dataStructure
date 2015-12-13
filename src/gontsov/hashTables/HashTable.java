@@ -1,62 +1,72 @@
 package gontsov.hashTables;
 
 public class HashTable {
-    class DataItem {
-        private int iData;
 
-        public DataItem(int ii) {
-            iData = ii;
+    public int size = 30; //размер хеш таблицы!!! TODO должна изменять размер
+    public HashIndex[] hashTable = new HashIndex[size];
+
+    public int hashCode(int key) {
+        return 31 * key % size;
+    }
+
+    public int size() {
+        int k = 0;
+        for (int i = 0; i < size; i++) {
+            if(hashTable[i] != null)
+                k++;
         }
+        return k;
+    }
 
-        public int getKey() {
-            return iData;
+    public void init(int[] ini) {
+        for (int i = 0; i < ini.length; i++) {
+            HashIndex hashIndex = new HashIndex(ini[i]);
+            add(hashIndex);
         }
     }
 
-    private DataItem[] hashArray;
-    private int arraySize;
-    private DataItem nonItem;
-
-
-    public HashTable(int size) {
-        arraySize = size;
-        hashArray = new DataItem[arraySize];
-        nonItem = new DataItem(-1);
-    }
-
-    public int hashFun(int k) {
-        return k % arraySize;
-    }
-
-    public void insert(DataItem item) {
-        int key = item.getKey();
-        int hashVal = hashFun(key);
-        while (hashArray[hashVal] != null && hashArray[hashVal].getKey() != -1) {
-            ++hashVal;
-            hashVal %= arraySize;
+    public void add(HashIndex key){
+        int val = key.getVal();
+        int hashCode = hashCode(val);
+        while (hashTable[hashCode] != null && hashTable[hashCode].getVal() != -1) {
+            hashCode++;
+            hashCode = hashCode % size;
         }
-        hashArray[hashVal] = item;
+        hashTable[hashCode] = key;
     }
 
-    public DataItem find(int key) {
-        int hashVal = hashFun(key);
-        while (hashArray[hashVal] != null) {
-            if (hashArray[hashVal].getKey() == key)
-                return hashArray[hashVal];
-            ++hashVal;
-            hashVal %= arraySize;
+    public int find(int val) {
+        int hashCode = hashCode(val);
+        while (hashTable[hashCode] != null) {
+            if(hashTable[hashCode].getVal() == val)
+                return hashTable[hashCode].getVal();
+            hashCode++;
+            hashCode %= size;
         }
-        return null;
+        return 0;
     }
 
-    public void displayTable() {
-        System.out.print("Table: ");
-        for (int j = 0; j < arraySize; j++) {
-            if (hashArray[j] != null)
-                System.out.print(hashArray[j].getKey() + " ");
-            else
-                System.out.print("** ");
+    public int del(int val){
+        int hashCode = hashCode(val);
+        while (hashTable[hashCode] != null) {
+            if(hashTable[hashCode].getVal() == val) {
+                int res = hashTable[hashCode].getVal();
+                hashTable[hashCode] = new HashIndex(-1);
+                return res;
+            }
+            hashCode++;
+            hashCode %= size;
         }
-        System.out.println("");
+        return 0;
+    }
+
+
+    public int[] toArray() {
+        int[] arrCopy = new int[size];
+        for (int i = 0; i < size; i++) {
+            if(hashTable[i] != null)
+                arrCopy[i] = hashTable[i].getVal();
+        }
+        return arrCopy;
     }
 }

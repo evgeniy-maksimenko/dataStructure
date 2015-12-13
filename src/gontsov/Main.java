@@ -1,5 +1,7 @@
 package gontsov;
 
+import gontsov.hashTables.HashIndex;
+import gontsov.hashTables.HashTable;
 import gontsov.linkedLists.LinkedList;
 
 import java.util.Arrays;
@@ -7,12 +9,14 @@ import java.util.Arrays;
 public class Main {
 
     public static void main(String[] args) {
-        LinkedList theList = new LinkedList();
-        theList.init(new int[]{700});
-        System.out.println(theList.delPos(0));
-        System.out.println(theList.size());
-        System.out.println(Arrays.toString(theList.toArray()));
-
+        HashTable theTable = new HashTable();
+        theTable.init(new int[]{100,200,300,400,500,600,700,800,900});
+        System.out.println(theTable.size());
+        System.out.println(Arrays.toString(theTable.toArray()));
+        System.out.println(theTable.find(800));
+        System.out.println(theTable.del(800));
+        System.out.println(theTable.size());
+        System.out.println(Arrays.toString(theTable.toArray()));
 
 
 
