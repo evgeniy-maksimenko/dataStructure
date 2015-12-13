@@ -1,4 +1,6 @@
-package gontsov;
+package gontsov.lists;
+
+import gontsov.EList;
 
 import java.util.Arrays;
 

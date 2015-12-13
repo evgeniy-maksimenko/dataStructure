@@ -1,4 +1,4 @@
-package gontsov;
+package gontsov.trees;
 
 public interface ETree {
     public void add(int val);

@@ -1,4 +1,4 @@
-package gontsov;
+package gontsov.hashTables;
 
 public class HashTable {
     class DataItem {

@@ -1,4 +1,4 @@
-import gontsov.BsTree;
+import gontsov.trees.BsTree;
 import org.junit.Test;
 
 import static junit.framework.TestCase.assertEquals;

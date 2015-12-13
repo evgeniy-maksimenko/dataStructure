@@ -1,39 +1,44 @@
-package gontsov;
+package gontsov.linkedLists;
 
-public class LinkedList implements EList {
+import gontsov.EList;
+import gontsov.lists.AList0;
+
+public class DoublyLinkedList implements EList {
     class Link {
+        public Link next;
+        public Link previous;
         public int val;
 
         public Link(int val) {
             this.val = val;
         }
 
-        public Link next;
-
         public void displayLink() {
             System.out.print("{" + val + "}");
         }
     }
 
-    private Link first;
-    private Link last;
+    public Link first;
+    public Link last;
 
-    @Override
     public void addStart(int val) {
         Link newLink = new Link(val);
-        if (isEmpty())
+        if (first == null)
             last = newLink;
+        else
+            first.previous = newLink;
         newLink.next = first;
         first = newLink;
     }
 
-    @Override
     public void addEnd(int val) {
         Link newLink = new Link(val);
-        if (isEmpty())
+        if (first == null) {
             first = newLink;
-        else
+        } else {
+            newLink.previous = last;
             last.next = newLink;
+        }
         last = newLink;
     }
 
@@ -42,64 +47,48 @@ public class LinkedList implements EList {
         int k = 0;
         Link current = first;
         Link newLink = new Link(val);
-        if(pos == 0)
-        {
+        if(pos == 0) {
             addStart(val);
         }
         while (current != null && pos != 0) {
-            if(k == pos - 1) {
-                newLink.next = current.next;
-                current.next = newLink;
+            if (pos == k) {
+                current.previous.next = newLink;
+                newLink.next = current;
+                newLink.previous = current.previous;
+                current.previous = newLink;
             }
             k++;
             current = current.next;
         }
     }
 
-    @Override
     public int delStart() {
         if (isEmpty())
             throw new IllegalArgumentException();
         Link temp = first;
+        if (first.next == null)
+            last = null;
+        else
+            first.next.previous = null;
         first = first.next;
         return temp.val;
     }
 
-    public void displayList() {
-        Link current = first;
-        while (current != null) {
-            current.displayLink();
-            current = current.next;
-        }
+    public boolean isEmpty() {
+        return first == null;
     }
 
-    @Override
     public int delEnd() {
+
         if (isEmpty())
             throw new IllegalArgumentException();
-
-        int res = 0;
-        Link current = first;
-
-        if(current.next == null){
-            res = current.val;
+        Link temp = last;
+        if (first.next == null)
             first = null;
-            clear();
-            return res;
-        }
-        else {
-            while (current != null) {
-                if(current.next.next == null){
-                    res = current.next.val;
-                    current.next = null;
-                    return res;
-                }
-                current = current.next;
-            }
-        }
-
-
-        return res;
+        else
+            last.previous.next = null;
+        last = last.previous;
+        return temp.val;
     }
 
     @Override
@@ -108,19 +97,19 @@ public class LinkedList implements EList {
             throw new IllegalArgumentException();
 
         int k = 0;
-        int res = k;
+        int res = get(pos);
         Link current = first;
-        if(pos == k)
-        {
-            res = current.val;
+        if(pos == k) {
             delStart();
-            return res;
         }
-        while (current != null) {
-            if( k == pos - 1) {
-                res = current.next.val;
-                current.next = current.next.next;
-                return res;
+        if(pos == size() - 1) {
+            delEnd();
+        }
+        while (current != null && pos != 0) {
+            if(k == pos)
+            {
+                current.previous.next = current.next;
+                current.next.previous = current.previous;
             }
             k++;
             current = current.next;
@@ -143,6 +132,7 @@ public class LinkedList implements EList {
     @Override
     public void clear() {
         first = null;
+        last = null;
     }
 
     @Override
@@ -155,51 +145,52 @@ public class LinkedList implements EList {
 
     @Override
     public int[] toArray() {
-
         AList0 list = new AList0();
-
         Link current = first;
         while (current != null) {
             list.addEnd(current.val);
             current = current.next;
         }
-
         return list.toArray();
     }
 
     @Override
     public void set(int pos, int val) {
+
         if (isEmpty())
             throw new IllegalArgumentException();
 
-        int k=0;
+
+        int res = 0;
+        int k = 0;
         Link current = first;
         while (current != null) {
-            if(k == pos)
-            {
+            if (k == pos) {
                 current.val = val;
                 return;
             }
+
             k++;
             current = current.next;
         }
+
     }
 
     @Override
     public int get(int pos) {
+
         if (isEmpty())
             throw new IllegalArgumentException();
 
         int res = 0;
-        int k=0;
+        int k = 0;
         Link current = first;
         while (current != null) {
-            if(k == pos)
+            if (k == pos)
                 res = current.val;
             k++;
             current = current.next;
         }
-
         return res;
     }
 
@@ -240,13 +231,12 @@ public class LinkedList implements EList {
         if (isEmpty())
             throw new IllegalArgumentException();
 
-
         Link current = first;
         int min = current.val;
         int k = 0;
         int minIndex = k;
         while (current != null) {
-            if (min > current.val) {
+            if (min > current.val){
                 min = current.val;
                 minIndex = k;
             }
@@ -268,7 +258,7 @@ public class LinkedList implements EList {
         int k = 0;
         int maxIndex = k;
         while (current != null) {
-            if (max < current.val){
+            if (max < current.val) {
                 max = current.val;
                 maxIndex = k;
             }
@@ -276,59 +266,31 @@ public class LinkedList implements EList {
             current = current.next;
         }
 
+
         return maxIndex;
     }
 
     @Override
     public void reverse() {
+
         if (isEmpty())
             throw new IllegalArgumentException();
+
     }
 
     @Override
     public void halfRevers() {
+
         if (isEmpty())
             throw new IllegalArgumentException();
+
     }
 
     @Override
     public void sort() {
         if (isEmpty())
             throw new IllegalArgumentException();
-    }
 
-    public boolean isEmpty() {
-        return first == null;
-    }
 
-    public Link find(int val) {
-        Link current = first;
-        while (current.val != val) {
-            if (current.next == null) {
-                return null;
-            } else {
-                current = current.next;
-            }
-        }
-        return current;
-    }
-
-    public Link delete(int val) {
-        Link current = first;
-        Link previous = first;
-        while (current.val != val) {
-            if (current.next == null) {
-                return null;
-            } else {
-                previous = current;
-                current = current.next;
-            }
-        }
-        if (current == first) {
-            first = first.next;
-        } else {
-            previous.next = current.next;
-        }
-        return current;
     }
 }

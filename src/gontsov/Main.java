@@ -1,5 +1,7 @@
 package gontsov;
 
+import gontsov.linkedLists.LinkedList;
+
 import java.util.Arrays;
 
 public class Main {

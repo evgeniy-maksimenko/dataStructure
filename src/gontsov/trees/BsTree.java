@@ -1,20 +1,13 @@
-package gontsov;
+package gontsov.trees;
+
+import gontsov.lists.AList0;
+import gontsov.patterns.Vizitor;
+
 
 import java.util.Iterator;
 
 public class BsTree implements ETree, Iterable<Integer> {
-    private int size = 0;
-    private int height = 0;
 
-    class Node {
-        int val;
-        Node leftChild;
-        Node rightChild;
-
-        public Node(int val) {
-            this.val = val;
-        }
-    }
 
     Node root;
 
@@ -23,11 +16,6 @@ public class BsTree implements ETree, Iterable<Integer> {
             add(anArr);
         }
     }
-
-    public void print() {
-        printTree(root);
-    }
-
     private void printTree(Node node) {
         if (node == null)
             return;
@@ -61,19 +49,20 @@ public class BsTree implements ETree, Iterable<Integer> {
         }
     }
 
+
     @Override
     public int size() {
-        return size(root);
+        Vizitor vizitor = new Vizitor();
+        size(root, vizitor);
+        return vizitor.getI();
     }
 
-    private int size(Node node) {
+    private void size(Node node, Vizitor vizitor) {
         if (node == null)
-            return 0;
-        int i = 0;
-        i += size(node.leftChild);
-        i++;
-        i += size(node.rightChild);
-        return i;
+            return;
+        size(node.leftChild, vizitor);
+        vizitor.action(node);
+        size(node.rightChild, vizitor);
     }
 
     @Override
@@ -110,40 +99,41 @@ public class BsTree implements ETree, Iterable<Integer> {
 
     @Override
     public int leafs() {
-        return leafs(root);
+        Vizitor vizitor = new Vizitor();
+        leafs(root, vizitor);
+        return vizitor.getI();
     }
 
-    private int leafs(Node node) {
+    private void leafs(Node node, Vizitor vizitor) {
         if (node == null) {
-            return 0;
+            return;
         }
-        int res = 0;
-        res += leafs(node.leftChild);
+        leafs(node.leftChild, vizitor);
         if (node.leftChild == null && node.rightChild == null) {
-            res++;
+            vizitor.action(node);
         }
-        res += leafs(node.rightChild);
-
-        return res;
+        leafs(node.rightChild, vizitor);
     }
 
     @Override
     public int nodes() {
-        return nodes(root);
+
+        Vizitor vizitor = new Vizitor();
+        nodes(root, vizitor);
+        return vizitor.getI();
     }
 
-    private int nodes(Node node) {
+    private void nodes(Node node, Vizitor vizitor) {
         if (node == null) {
-            return 0;
+            return;
         }
-        int res = 0;
-        res += nodes(node.leftChild);
-        if (node.leftChild != null && node.rightChild != null) {
-            res++;
-        }
-        res += nodes(node.rightChild);
 
-        return res;
+        nodes(node.leftChild, vizitor);
+        if (node.leftChild != null && node.rightChild != null) {
+            vizitor.action(node);
+        }
+        nodes(node.rightChild, vizitor);
+
     }
 
 

@@ -1,4 +1,9 @@
-import gontsov.*;
+import gontsov.linkedLists.DoublyLinkedList;
+import gontsov.EList;
+import gontsov.linkedLists.LinkedList;
+import gontsov.lists.AList0;
+import gontsov.lists.AList1;
+import gontsov.lists.AList2;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;

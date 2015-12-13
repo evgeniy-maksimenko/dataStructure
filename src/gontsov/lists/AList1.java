@@ -1,6 +1,7 @@
-package gontsov;
+package gontsov.lists;
 
-import java.util.Arrays;
+import gontsov.EList;
+
 import java.util.Iterator;
 
 public class AList1 implements EList, Iterable<Integer> {
