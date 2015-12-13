@@ -2,11 +2,15 @@ package gontsov.hashTables;
 
 public class HashTable {
 
-    public int size = 30; //размер хеш таблицы!!! TODO должна изменять размер
+    public int size = 60; //размер хеш таблицы!!! TODO должна изменять размер
     public HashIndex[] hashTable = new HashIndex[size];
 
     public int hashCode(int key) {
         return 31 * key % size;
+    }
+
+    public int hashCodeDouble(int k) {
+        return 5 - k %  5 ;
     }
 
     public int size() {
@@ -21,40 +25,42 @@ public class HashTable {
     public void init(int[] ini) {
         for (int i = 0; i < ini.length; i++) {
             HashIndex hashIndex = new HashIndex(ini[i]);
-            add(hashIndex);
+            add(ini[i], hashIndex);
         }
     }
 
-    public void add(HashIndex key){
-        int val = key.getVal();
-        int hashCode = hashCode(val);
+    public void add(int key, HashIndex item){
+        int hashCode = hashCode(key);
+        int step = hashCodeDouble(key);
         while (hashTable[hashCode] != null && hashTable[hashCode].getVal() != -1) {
-            hashCode++;
+            hashCode += step;
             hashCode = hashCode % size;
         }
-        hashTable[hashCode] = key;
+        hashTable[hashCode] = item;
     }
 
-    public int find(int val) {
-        int hashCode = hashCode(val);
+    public int find(int key) {
+        int hashCode = hashCode(key);
+        int step = hashCodeDouble(key);
         while (hashTable[hashCode] != null) {
-            if(hashTable[hashCode].getVal() == val)
+            if(hashTable[hashCode].getVal() == key)
                 return hashTable[hashCode].getVal();
-            hashCode++;
+            hashCode += step;
             hashCode %= size;
         }
         return 0;
     }
 
-    public int del(int val){
-        int hashCode = hashCode(val);
+    public int del(int key){
+        int hashCode = hashCode(key);
+        int step = hashCodeDouble(key);
         while (hashTable[hashCode] != null) {
-            if(hashTable[hashCode].getVal() == val) {
+            if(hashTable[hashCode].getVal() == key) {
                 int res = hashTable[hashCode].getVal();
                 hashTable[hashCode] = new HashIndex(-1);
                 return res;
             }
-            hashCode++;
+            hashCode += step;
             hashCode %= size;
         }
         return 0;
