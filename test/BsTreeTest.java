@@ -16,7 +16,7 @@ public class BsTreeTest {
     public void testAdd1(){
         theTree.add(1);
         assertEquals(1, theTree.size());
-        assertArrayEquals(new int[] {1}, theTree.toArray());
+        assertArrayEquals(new Integer[] {1}, theTree.toArray());
     }
 
     @Test
@@ -24,7 +24,7 @@ public class BsTreeTest {
         theTree.add(1);
         theTree.add(2);
         assertEquals(2, theTree.size());
-        assertArrayEquals(new int[] {1,2}, theTree.toArray());
+        assertArrayEquals(new Integer[] {1,2}, theTree.toArray());
     }
 
     @Test
@@ -32,7 +32,7 @@ public class BsTreeTest {
         theTree.add(123);
         theTree.add(22);
         assertEquals(2, theTree.size());
-        assertArrayEquals(new int[] {22,123}, theTree.toArray());
+        assertArrayEquals(new Integer[] {22,123}, theTree.toArray());
     }
 
     @Test
@@ -53,32 +53,32 @@ public class BsTreeTest {
     @Test
     public void testToArray1(){
         theTree.init(new int[] {1});
-        int[] Actual = theTree.toArray();
-        int[] Expected = new int[] {1};
+        Object[] Actual = theTree.toArray();
+        Object[] Expected = new Object[] {1};
         assertArrayEquals(Expected, Actual);
     }
 
     @Test
     public void testToArray2(){
         theTree.init(new int[] {1,2});
-        int[] Actual = theTree.toArray();
-        int[] Expected = new int[] {1,2};
+        Object[] Actual = theTree.toArray();
+        Object[] Expected = new Object[] {1,2};
         assertArrayEquals(Expected, Actual);
     }
 
     @Test
     public void testToArray3(){
         theTree.init(new int[] {1,2,3});
-        int[] Actual = theTree.toArray();
-        int[] Expected = new int[] {1,2,3};
+        Object[] Actual = theTree.toArray();
+        Object[] Expected = new Object[] {1,2,3};
         assertArrayEquals(Expected, Actual);
     }
 
     @Test
     public void testToArray4(){
         theTree.init(new int[] {875,34,56});
-        int[] Actual = theTree.toArray();
-        int[] Expected = new int[] {34,56,875};
+        Object[] Actual = theTree.toArray();
+        Object[] Expected = new Object[] {34,56,875};
         assertArrayEquals(Expected, Actual);
     }
 
@@ -189,6 +189,6 @@ public class BsTreeTest {
     public void testReverse(){
         theTree.init(new int[] {1,2,3,4,5});
         theTree.reverse();
-        assertArrayEquals(new int[]{1,2,3,4,5}, theTree.toArray());
+        assertArrayEquals(new Integer[]{1,2,3,4,5}, theTree.toArray());
     }
 }

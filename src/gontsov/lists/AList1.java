@@ -3,15 +3,18 @@ package gontsov.lists;
 import gontsov.EList;
 
 import java.util.Iterator;
+import java.util.Spliterator;
+import java.util.function.Consumer;
 
-public class AList1 implements EList, Iterable<Integer> {
-    int[] list = new int[10];
+
+public class AList1<EE extends Comparable<EE>> implements EList<EE>, Iterable<EE> {
+    Object[] list = new Object[10];
     int top;
 
     public AList1() {
     }
 
-    public AList1(int[] ini) {
+    public AList1(EE[] ini) {
         this.init(ini);
     }
 
@@ -28,10 +31,10 @@ public class AList1 implements EList, Iterable<Integer> {
     }
 
     @Override
-    public int get(int index) {
+    public EE get(int index) {
         if (size() == 0)
             throw new IllegalArgumentException();
-        return list[index];
+        return (EE)list[index];
     }
 
     @Override
@@ -40,8 +43,17 @@ public class AList1 implements EList, Iterable<Integer> {
     }
 
     @Override
-    public int[] toArray() {
-        int[] tmp = new int[this.size()];
+    public void init(EE[] ini) {
+        for (int i = 0; i < ini.length; ++i) {
+            this.list[i] = ini[i];
+        }
+
+        this.top = ini.length;
+    }
+
+    @Override
+    public Object[] toArray() {
+        Object[] tmp = new Object[this.size()];
 
         for (int i = 0; i < tmp.length; ++i) {
             tmp[i] = this.list[i];
@@ -54,24 +66,27 @@ public class AList1 implements EList, Iterable<Integer> {
     public int min() {
         if (size() == 0)
             throw new IllegalArgumentException();
-        int min = list[0];
+        EE min = (EE)list[0];
         for (int i = 0; i < top; i++) {
-            if(min > list[i])
-                min = list[i];
+            EE tmp = (EE)list[i];
+            if(min.compareTo(tmp) == 1)
+                min = tmp;
         }
-        return min;
+        return (Integer) min;
     }
 
     @Override
     public int max() {
         if (size() == 0)
             throw new IllegalArgumentException();
-        int min = list[0];
+        EE max = (EE)list[0];
         for (int i = 0; i < top; i++) {
-            if(min < list[i])
-                min = list[i];
+            EE tmp = (EE)list[i];
+            if(tmp.compareTo(max) == 1){
+                max = tmp;
+            }
         }
-        return min;
+        return (Integer) max;
     }
 
     @Override
@@ -80,7 +95,9 @@ public class AList1 implements EList, Iterable<Integer> {
             throw new IllegalArgumentException();
         int minIndex = 0;
         for (int i = 0; i < top; i++) {
-            if(list[i] < list[minIndex])
+            EE tmp = (EE)list[i];
+            EE minIndexArray = (EE) list[minIndex];
+            if(tmp.compareTo(minIndexArray) == -1)
                 minIndex = i;
         }
         return minIndex;
@@ -90,12 +107,14 @@ public class AList1 implements EList, Iterable<Integer> {
     public int maxIndex() {
         if (size() == 0)
             throw new IllegalArgumentException();
-        int minIndex = 0;
+        int maxIndex = 0;
         for (int i = 0; i < top; i++) {
-            if(list[i] > list[minIndex])
-                minIndex = i;
+            EE tmp = (EE)list[i];
+            EE minIndexArray = (EE) list[maxIndex];
+            if(tmp.compareTo(minIndexArray) == 1)
+                maxIndex = i;
         }
-        return minIndex;
+        return maxIndex;
     }
 
 
@@ -107,8 +126,10 @@ public class AList1 implements EList, Iterable<Integer> {
         int out, in;
         for (out = 0; out < top; out++) {
             for (in = 0; in < top; in++) {
-                if (list[in] > list[out]) {
-                    int tmp = list[in];
+                EE arrayIn = (EE)list[in];
+                EE arrayOut = (EE)list[out];
+                if ( arrayIn.compareTo(arrayOut) == 1) {
+                    EE tmp = arrayIn;
                     list[in] = list[out];
                     list[out] = tmp;
                 }
@@ -124,7 +145,7 @@ public class AList1 implements EList, Iterable<Integer> {
             throw new IllegalArgumentException();
 
         for (int i = 0; i < top / 2; i++) {
-            int tmp = list[i];
+            EE tmp = (EE)list[i];
             list[i] = list[top - i - 1];
             list[top - i - 1] = tmp;
         }
@@ -138,21 +159,13 @@ public class AList1 implements EList, Iterable<Integer> {
         int halfArray = top / 2;
         int next = halfArray + top % 2;
         for (int i = 0; i < halfArray; i++) {
-            int temp = list[i];
+            EE temp = (EE)list[i];
             list[i] = list[i + next];
             list[i + next] = temp;
         }
     }
 
-    public void init(int[] ini) {
-        for (int i = 0; i < ini.length; ++i) {
-            this.list[i] = ini[i];
-        }
-
-        this.top = ini.length;
-    }
-
-    @Override
+        @Override
     public void addStart(int val) {
         for (int i = this.top; i > 0; --i) {
             this.list[i] = this.list[i - 1];
@@ -170,14 +183,14 @@ public class AList1 implements EList, Iterable<Integer> {
     @Override
     public void addPos(int pos, int val) {
         top++;
-        int[] arrPartCopy = new int[top];
+        Object[] arrPartCopy = new Object[top];
         for (int i = 0; i < top; i++) {
             if(i==pos)
                 arrPartCopy[i] = val;
             if(i<pos)
-                arrPartCopy[i] = list[i];
+                arrPartCopy[i] = (EE)list[i];
             if(i>pos)
-                arrPartCopy[i] = list[i-1];
+                arrPartCopy[i] = (EE)list[i-1];
         }
 
         for (int i = 0; i < top; i++) {
@@ -186,10 +199,10 @@ public class AList1 implements EList, Iterable<Integer> {
     }
 
     @Override
-    public int delStart() {
+    public EE delStart() {
         if (size() == 0)
             throw new IllegalArgumentException();
-        int delElement = this.list[0];
+        EE delElement = (EE)this.list[0];
 
         for (int i = 0; i < this.top; ++i) {
             this.list[i] = this.list[i + 1];
@@ -200,23 +213,23 @@ public class AList1 implements EList, Iterable<Integer> {
     }
 
     @Override
-    public int delEnd() {
+    public EE delEnd() {
         if (size() == 0)
             throw new IllegalArgumentException();
 
-        return this.list[--this.top];
+        return (EE)this.list[--this.top];
     }
 
     @Override
-    public int delPos(int index) {
+    public EE delPos(int index) {
         if (size() == 0)
             throw new IllegalArgumentException();
 
-        int res = 0;
+        EE res = null;
 
         for (int i = 0; i < this.top; ++i) {
             if (i == index) {
-                res = this.list[i];
+                res = (EE)this.list[i];
                 this.list[i] = this.list[i + 1];
                 --this.top;
             }
@@ -234,28 +247,25 @@ public class AList1 implements EList, Iterable<Integer> {
             throw new IllegalArgumentException();
     }
 
-    public Iterator<Integer> iterator() {
+    public Iterator<EE> iterator() {
+
         return new AList1Iterator(toArray());
     }
 
-    class AList1Iterator implements Iterator<Integer> {
+
+    class AList1Iterator implements Iterator<EE> {
 
         int i = 0;
-        int[] arr = new int[]{};
+        Object[] arr = new Object[]{};
 
-        public AList1Iterator(int[] arr) {
+        public AList1Iterator(Object[] arr) {
             this.arr = arr;
-
         }
 
         @Override
-        public boolean hasNext() {
-            return i < arr.length;
-        }
+        public boolean hasNext() { return i < arr.length; }
 
         @Override
-        public Integer next() {
-            return arr[i++];
-        }
+        public EE next() { return (EE)arr[i++]; }
     }
 }

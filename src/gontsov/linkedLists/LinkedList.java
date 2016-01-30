@@ -2,7 +2,8 @@ package gontsov.linkedLists;
 
 import gontsov.EList;
 import gontsov.lists.AList0;
-
+public class LinkedList{}
+/*
 public class LinkedList implements EList {
     class Link {
         public int val;
@@ -335,3 +336,4 @@ public class LinkedList implements EList {
         return current;
     }
 }
+*/

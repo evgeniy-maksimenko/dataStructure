@@ -3,12 +3,13 @@ package gontsov.lists;
 import gontsov.EList;
 
 import java.util.Arrays;
+import java.util.Iterator;
 
-public class AList2 implements EList {
+public class AList2<EE extends Comparable<EE>> implements EList<EE>, Iterable<EE> {
 
-    int[] list = new int[20];
-    public int start;
-    public int end;
+    Object[] list = new Object[30];
+    public int start = 10;
+    public int end = 10;
 
     public void print(){
         System.out.println("start = "+start);
@@ -39,28 +40,28 @@ public class AList2 implements EList {
     }
 
     @Override
-    public int delStart() {
+    public EE delStart() {
         if(size() == 0)
             throw new IllegalArgumentException();
-        int deleted = list[start];
+        EE deleted = (EE) list[start];
         start++;
         return deleted;
     }
 
     @Override
-    public int delEnd() {
+    public EE delEnd() {
         if(size() == 0)
             throw new IllegalArgumentException();
 
         end--;
-        return list[end];
+        return (EE)list[end];
     }
 
     @Override
-    public int delPos(int pos) {
+    public EE delPos(int pos) {
         if(size() == 0)
             throw new IllegalArgumentException();
-        int deleted = list[start+pos];
+        EE deleted = (EE)list[start+pos];
         end--;
         for (int i = start + pos; i < end; i++) {
             list[i] = list[i+1];
@@ -79,10 +80,10 @@ public class AList2 implements EList {
     }
 
     @Override
-    public void init(int[] ini) {
+    public void init(EE[] ini) {
         clear();
         if(ini == null)
-            ini = new int[0];
+            return;
         start = start - ini.length/2;
         for (int i = 0; i < ini.length; i++) {
             list[start+i] = ini[i];
@@ -91,8 +92,8 @@ public class AList2 implements EList {
     }
 
     @Override
-    public int[] toArray() {
-        int[] arrCopy = new int[size()];
+    public Object[] toArray() {
+        Object[] arrCopy = new Object[size()];
         for (int j = 0; j < size(); j++) {
             arrCopy[j] = list[start + j];
         }
@@ -107,36 +108,38 @@ public class AList2 implements EList {
     }
 
     @Override
-    public int get(int pos) {
+    public EE get(int pos) {
         if (size()==0)
             throw new IllegalArgumentException();
-        return list[start+pos];
+        return (EE)list[start+pos];
     }
 
     @Override
     public int min() {
         if(size() == 0)
             throw new IllegalArgumentException();
-        int min = list[start];
+        EE min = (EE)list[start];
         for (int i = 0; i < size(); i++) {
-            if(min > list[start + i]){
-                min = list[ start + i ];
+            EE tmp = (EE)list[start + i];
+            if(min.compareTo(tmp) == 1) {
+                min = tmp;
             }
         }
-        return min;
+        return (Integer) min;
     }
 
     @Override
     public int max() {
         if(size() == 0)
             throw new IllegalArgumentException();
-        int max = list[start];
-        for (int i = 0; i < size(); i++) {
-            if(max < list[start + i]){
-                max = list[ start + i ];
+        EE max = (EE)list[start];
+        for (int i = start+1; i < end; i++) {
+            EE tmp = (EE)list[i];
+            if(tmp.compareTo(max) == 1){
+                max = tmp;
             }
         }
-        return max;
+        return (Integer) max;
     }
 
     @Override
@@ -145,7 +148,9 @@ public class AList2 implements EList {
             throw new IllegalArgumentException();
         int minIndex = start;
         for (int i = start; i < end; i++) {
-            if(list[i] < list[minIndex])
+            EE tmp = (EE)list[i];
+            EE minIndexArray = (EE) list[minIndex];
+            if(tmp.compareTo(minIndexArray) == -1)
                 minIndex = i;
         }
         return minIndex-start;
@@ -155,9 +160,11 @@ public class AList2 implements EList {
     public int maxIndex() {
         if(size() == 0)
             throw new IllegalArgumentException();
-        int maxIndex = 0;
-        for (int i = start; i < end; i++) {
-            if(list[i] > list[maxIndex])
+        int maxIndex = start;
+        for (int i = start+1; i < end; i++) {
+            EE tmp = (EE)list[i];
+            EE maxIndexArray = (EE) list[maxIndex];
+            if(tmp.compareTo(maxIndexArray) == 1)
                 maxIndex = i;
         }
         return maxIndex-start;
@@ -169,7 +176,7 @@ public class AList2 implements EList {
             throw new IllegalArgumentException();
         int temp = end - 1;
         for (int i = start; i < (start + end) / 2; i++) {
-            int tmp = list[i];
+            EE tmp = (EE)list[i];
             list[i] = list[temp];
             list[temp] = tmp;
             temp--;
@@ -186,13 +193,13 @@ public class AList2 implements EList {
         {
             if( size() % 2 == 0)
             {
-                int tmp = list[start + i];
+                EE tmp = (EE)list[start + i];
                 list[start + i] = list[start + half + i];
                 list[start + half + i]= tmp;
             }
             else
             {
-                int tmp = list[start + i];
+                EE tmp = (EE)list[start + i];
                 list[start + i] = list[start + half + i + 1];
                 list[start + half + i + 1 ]= tmp;
             }
@@ -207,12 +214,34 @@ public class AList2 implements EList {
         int out, in;
         for (out = start; out <  end; out++) {
             for (in = start; in <  end; in++) {
-                if (list[in] > list[out]) {
-                    int tmp = list[in];
+                EE arrayIn = (EE)list[in];
+                EE arrayOut = (EE)list[out];
+                if ( arrayIn.compareTo(arrayOut) == 1) {
+                    EE tmp = arrayIn;
                     list[in] = list[out];
                     list[out] = tmp;
                 }
             }
+        }
+    }
+
+    @Override
+    public Iterator<EE> iterator() {
+        return new CustomIterator();
+    }
+
+    private class CustomIterator implements Iterator<EE>
+    {
+        int i = start;
+
+        @Override
+        public boolean hasNext() {
+            return i < end;
+        }
+
+        @Override
+        public EE next() {
+            return (EE)list[i++];
         }
     }
 }

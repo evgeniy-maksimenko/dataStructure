@@ -1,7 +1,9 @@
 package gontsov.linkedLists;
-
+public class DoublyLinkedList{}
+/*
 import gontsov.EList;
 import gontsov.lists.AList0;
+
 
 public class DoublyLinkedList implements EList {
     class Link {
@@ -294,3 +296,4 @@ public class DoublyLinkedList implements EList {
 
     }
 }
+*/

@@ -3,22 +3,30 @@ package gontsov;
 import gontsov.hashTables.HashIndex;
 import gontsov.hashTables.HashTable;
 import gontsov.linkedLists.LinkedList;
+import gontsov.lists.AList2;
 
 import java.util.Arrays;
 
 public class Main {
 
     public static void main(String[] args) {
-        HashTable theTable = new HashTable();
-        theTable.init(new int[]{100,200,300,400,500,600,700,800,900});
-        System.out.println(theTable.size());
-        System.out.println(Arrays.toString(theTable.toArray()));
-        System.out.println(theTable.find(800));
-        System.out.println(theTable.del(800));
-        System.out.println(theTable.size());
-        System.out.println(Arrays.toString(theTable.toArray()));
+        AList2<Integer> theList = new AList2<Integer>();
+        /*
+        theList.init(new Integer[]{100,200,300,400,500,600,700,800,900});
+        System.out.println(theList.max());
+        System.out.println(theList.size());
+        System.out.println(Arrays.toString(theList.toArray()));
+        System.out.println(theList.size());
+        System.out.println(Arrays.toString(theList.toArray()));
+        */
 
+        theList.addStart(100);
+        theList.addStart(200);
+        theList.addStart(300);
 
+        for (Integer l : theList) {
+            System.out.println(l);
+        }
 
 //        theList.addStart(20);
 //

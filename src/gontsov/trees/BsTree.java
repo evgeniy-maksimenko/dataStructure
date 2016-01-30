@@ -1,11 +1,10 @@
 package gontsov.trees;
 
+
 import gontsov.lists.AList0;
 import gontsov.patterns.Vizitor;
 
-
 import java.util.Iterator;
-
 public class BsTree implements ETree, Iterable<Integer> {
 
 
@@ -83,8 +82,8 @@ public class BsTree implements ETree, Iterable<Integer> {
     }
 
     @Override
-    public int[] toArray() {
-        AList0 list = new AList0();
+    public Object[] toArray() {
+        AList0<Integer> list = new AList0<Integer>();
         toArray(root, list);
         return list.toArray();
     }
@@ -184,9 +183,9 @@ public class BsTree implements ETree, Iterable<Integer> {
     class AList1Iterator implements Iterator<Integer> {
 
         int i = 0;
-        int[] arr = new int[]{};
+        Object[] arr = new Object[]{};
 
-        public AList1Iterator(int[] arr) {
+        public AList1Iterator(Object[] arr) {
             this.arr = arr;
 
         }
@@ -198,7 +197,7 @@ public class BsTree implements ETree, Iterable<Integer> {
 
         @Override
         public Integer next() {
-            return arr[i++];
+            return (Integer) arr[i++];
         }
     }
 }

@@ -4,23 +4,15 @@ import gontsov.EList;
 
 import java.util.Iterator;
 
-public class AList0 implements EList, Iterable<Integer> {
-    public int[] list = {};
+
+
+public class AList0<EE extends Comparable<EE>> implements EList<EE>, Iterable<EE> {
+    public Object[] list = {};
+
 
     @Override
-    public void init(int[] in) {
-        if (in == null) {
-            in = new int[0];
-        }
-        list = new int[in.length];
-        for (int i = 0; i < in.length; i++) {
-            list[i] = in[i];
-        }
-    }
-
-    @Override
-    public int[] toArray() {
-        int[] in = new int[size()];
+    public Object[] toArray() {
+        Object[] in = new Object[size()];
         for (int i = 0; i < size(); i++) {
             in[i] = list[i];
         }
@@ -28,7 +20,7 @@ public class AList0 implements EList, Iterable<Integer> {
     }
 
 
-    private void exception(int[] array) {
+    private void exception(Object[] array) {
         if (array == null || array.length == 0)
             throw new IllegalArgumentException();
     }
@@ -37,38 +29,40 @@ public class AList0 implements EList, Iterable<Integer> {
     public int min() {
         exception(list);
 
-        int result = list[0];
+        EE min = (EE)list[0];
         for (int i = 0; i < list.length; i++) {
-            if (list[i] < result) {
-                result = list[i];
+            EE tmp = (EE)list[i];
+            if(min.compareTo(tmp) == 1) {
+                min = tmp;
             }
         }
-        return result;
+        return (Integer) min;
 
     }
 
     @Override
     public int max() {
         exception(list);
-        int result = list[0];
+        EE max = (EE)list[0];
         for (int i = 0; i < list.length; i++) {
-            if (list[i] > result) {
-                result = list[i];
+            EE tmp = (EE)list[i];
+            if(tmp.compareTo(max) == 1){
+                max = tmp;
             }
         }
-        return result;
+        return (Integer)max;
     }
 
 
     @Override
     public int minIndex() {
         exception(list);
-        int result = list[0];
+        EE result = (EE)list[0];
         int index = 0;
         for (int i = 0; i < list.length; i++) {
-            if (list[i] < result) {
+            EE tmp = (EE)list[i];
+            if(tmp.compareTo(result) == -1)
                 index = i;
-            }
         }
         return index;
     }
@@ -77,12 +71,14 @@ public class AList0 implements EList, Iterable<Integer> {
     public int maxIndex() {
         exception(list);
 
-        int minIndex = 0;
+        int maxIndex = 0;
         for (int i = 0; i < list.length; i++) {
-            if(list[i] > list[minIndex])
-                minIndex = i;
+            EE tmp = (EE)list[i];
+            EE maxIndexArray = (EE) list[maxIndex];
+            if(tmp.compareTo(maxIndexArray) == 1)
+                maxIndex = i;
         }
-        return minIndex;
+        return maxIndex;
     }
 
     @Override
@@ -91,8 +87,10 @@ public class AList0 implements EList, Iterable<Integer> {
         int out, in;
         for (out = 0; out < list.length; out++) {
             for (in = 0; in < list.length; in++) {
-                if (list[in] > list[out]) {
-                    int tmp = list[in];
+                EE arrayIn = (EE)list[in];
+                EE arrayOut = (EE)list[out];
+                if ( arrayIn.compareTo(arrayOut) == 1) {
+                    EE tmp = arrayIn;
                     list[in] = list[out];
                     list[out] = tmp;
                 }
@@ -113,7 +111,7 @@ public class AList0 implements EList, Iterable<Integer> {
         exception(list);
 
         for (int i = 0; i < list.length / 2; i++) {
-            int tmp = list[i];
+            Object tmp = list[i];
             list[i] = list[list.length - i - 1];
             list[list.length - i - 1] = tmp;
         }
@@ -126,7 +124,7 @@ public class AList0 implements EList, Iterable<Integer> {
         int halfArray = list.length / 2;
         int next = halfArray + list.length % 2;
         for (int i = 0; i < halfArray; i++) {
-            int temp = list[i];
+            Object temp = list[i];
             list[i] = list[i + next];
             list[i + next] = temp;
         }
@@ -144,20 +142,33 @@ public class AList0 implements EList, Iterable<Integer> {
     }
 
     @Override
-    public int get(int index) {
+    public EE get(int index) {
         exception(list);
-        return list[index];
+        return (EE)list[index];
     }
 
     @Override
     public void clear() {
-        list = new int[0];
+        list = new Object[0];
     }
+
+
+    @Override
+    public void init(EE[] in) {
+        if (in == null) {
+            return;
+        }
+        list = new Object[in.length];
+        for (int i = 0; i < in.length; i++) {
+            list[i] = in[i];
+        }
+    }
+
 
     @Override
     public void addStart(int element) {
         int LENGTH = list.length;
-        int[] baseArray = new int[LENGTH + 1];
+        Object[] baseArray = new Object[LENGTH + 1];
 
         for (int i = 0; i < baseArray.length; i++) {
             if (i == 0) {
@@ -173,7 +184,7 @@ public class AList0 implements EList, Iterable<Integer> {
     @Override
     public void addEnd(int element) {
         int LENGTH = list.length;
-        int[] baseArray = new int[LENGTH + 1];
+        Object[] baseArray = new Object[LENGTH + 1];
 
         for (int i = 0; i < baseArray.length; i++) {
 
@@ -191,7 +202,7 @@ public class AList0 implements EList, Iterable<Integer> {
     public void addPos(int index, int element) {
         exception(list);
         int LENGTH = list.length;
-        int[] baseArray = new int[LENGTH + 1];
+        Object[] baseArray = new Object[LENGTH + 1];
 
 
         for (int i = 0; i < baseArray.length; i++) {
@@ -210,25 +221,25 @@ public class AList0 implements EList, Iterable<Integer> {
     }
 
     @Override
-    public int delStart() {
+    public EE delStart() {
         exception(list);
-        int delElement = list[0];
+        Object delElement = list[0];
         int LENGTH = list.length;
-        int[] baseArray = new int[LENGTH - 1];
+        Object[] baseArray = new Object[LENGTH - 1];
 
         for (int i = 0; i < baseArray.length; i++)
             baseArray[i] = list[i + 1];
 
         list = baseArray;
-        return delElement;
+        return (EE)delElement;
     }
 
     @Override
-    public int delEnd() {
+    public EE delEnd() {
         exception(list);
         int LENGTH = list.length;
-        int delElement = list[LENGTH - 1];
-        int[] baseArray = new int[LENGTH - 1];
+        Object delElement = list[LENGTH - 1];
+        Object[] baseArray = new Object[LENGTH - 1];
 
         for (int i = 0; i < baseArray.length; i++) {
             baseArray[i] = list[i];
@@ -236,17 +247,17 @@ public class AList0 implements EList, Iterable<Integer> {
         }
 
         list = baseArray;
-        return delElement;
+        return (EE)delElement;
     }
 
     @Override
-    public int delPos(int index) {
+    public EE delPos(int index) {
         exception(list);
 
         exception(list);
-        int delElement = list[index];
+        Object delElement = list[index];
         int LENGTH = list.length;
-        int[] baseArray = new int[LENGTH - 1];
+        Object[] baseArray = new Object[LENGTH - 1];
 
         for (int i = 0; i < baseArray.length; i++) {
             if (i < index) baseArray[i] = list[i];
@@ -254,20 +265,20 @@ public class AList0 implements EList, Iterable<Integer> {
             if (i >= index) baseArray[i] = list[i + 1];
         }
         list = baseArray;
-        return delElement;
+        return (EE)delElement;
     }
 
 
-    public Iterator<Integer> iterator() {
+    public Iterator<EE> iterator() {
         return new AList0Iterator(toArray());
     }
 
-    class AList0Iterator implements Iterator<Integer> {
+    class AList0Iterator implements Iterator<EE> {
 
         int i = 0;
-        int[] arr = new int[]{};
+        Object[] arr = new Object[]{};
 
-        public AList0Iterator(int[] arr) {
+        public AList0Iterator(Object[] arr) {
             this.arr = arr;
 
         }
@@ -278,9 +289,7 @@ public class AList0 implements EList, Iterable<Integer> {
         }
 
         @Override
-        public Integer next() {
-            return arr[i++];
-        }
+        public EE next() { return (EE)arr[i++]; }
     }
 
 }
