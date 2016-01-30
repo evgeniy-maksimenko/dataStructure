@@ -2,13 +2,11 @@ package gontsov.linkedLists;
 
 import gontsov.EList;
 import gontsov.lists.AList0;
-public class LinkedList{}
-/*
-public class LinkedList implements EList {
+public class LinkedList<EE extends Comparable<EE>> implements EList<EE> {
     class Link {
-        public int val;
+        public Object val;
 
-        public Link(int val) {
+        public Link(Object val) {
             this.val = val;
         }
 
@@ -61,12 +59,12 @@ public class LinkedList implements EList {
     }
 
     @Override
-    public int delStart() {
+    public EE delStart() {
         if (isEmpty())
             throw new IllegalArgumentException();
         Link temp = first;
         first = first.next;
-        return temp.val;
+        return (EE) temp.val;
     }
 
     public void displayList() {
@@ -78,15 +76,15 @@ public class LinkedList implements EList {
     }
 
     @Override
-    public int delEnd() {
+    public EE delEnd() {
         if (isEmpty())
             throw new IllegalArgumentException();
 
-        int res = 0;
+        EE res = null;
         Link current = first;
 
         if(current.next == null){
-            res = current.val;
+            res = (EE)current.val;
             first = null;
             clear();
             return res;
@@ -94,7 +92,7 @@ public class LinkedList implements EList {
         else {
             while (current != null) {
                 if(current.next.next == null){
-                    res = current.next.val;
+                    res =(EE) current.next.val;
                     current.next = null;
                     return res;
                 }
@@ -107,30 +105,30 @@ public class LinkedList implements EList {
     }
 
     @Override
-    public int delPos(int pos) {
+    public EE delPos(int pos) {
         if (isEmpty())
             throw new IllegalArgumentException();
 
         int k = 0;
-        int res = k;
+        Object res = k;
         Link current = first;
         if(pos == k)
         {
             res = current.val;
             delStart();
-            return res;
+            return (EE)res;
         }
         while (current != null) {
             if( k == pos - 1) {
                 res = current.next.val;
                 current.next = current.next.next;
-                return res;
+                return (EE)res;
             }
             k++;
             current = current.next;
         }
 
-        return res;
+        return (EE)res;
     }
 
     @Override
@@ -150,21 +148,22 @@ public class LinkedList implements EList {
     }
 
     @Override
-    public void init(int[] ini) {
+    public void init(EE[] ini) {
         clear();
         for (int i = ini.length - 1; i >= 0; i--) {
-            addStart(ini[i]);
+            addStart((Integer) ini[i]);
         }
     }
 
-    @Override
-    public int[] toArray() {
 
-        AList0 list = new AList0();
+    @Override
+    public Object[] toArray() {
+
+        AList0<Integer> list = new AList0<Integer>();
 
         Link current = first;
         while (current != null) {
-            list.addEnd(current.val);
+            list.addEnd((Integer) current.val);
             current = current.next;
         }
 
@@ -190,12 +189,12 @@ public class LinkedList implements EList {
     }
 
     @Override
-    public int get(int pos) {
+    public EE get(int pos) {
         if (isEmpty())
             throw new IllegalArgumentException();
 
-        int res = 0;
-        int k=0;
+        Object res = null;
+        int k = 0;
         Link current = first;
         while (current != null) {
             if(k == pos)
@@ -204,7 +203,7 @@ public class LinkedList implements EList {
             current = current.next;
         }
 
-        return res;
+        return (EE)res;
     }
 
     @Override
@@ -213,14 +212,15 @@ public class LinkedList implements EList {
             throw new IllegalArgumentException();
 
         Link current = first;
-        int min = current.val;
+        EE min = (EE)current.val;
         while (current != null) {
-            if (min > current.val)
-                min = current.val;
+            EE currentVal = (EE)current.val;
+            if(min.compareTo(currentVal) == 1)
+                min = currentVal;
             current = current.next;
         }
 
-        return min;
+        return (Integer) min;
     }
 
     @Override
@@ -229,14 +229,15 @@ public class LinkedList implements EList {
             throw new IllegalArgumentException();
 
         Link current = first;
-        int max = current.val;
+        EE max = (EE)current.val;
         while (current != null) {
-            if (max < current.val)
-                max = current.val;
+            EE currentVal = (EE)current.val;
+            if(max.compareTo(currentVal) == -1)
+                max = currentVal;
             current = current.next;
         }
 
-        return max;
+        return (Integer) max;
     }
 
     @Override
@@ -246,14 +247,18 @@ public class LinkedList implements EList {
 
 
         Link current = first;
-        int min = current.val;
+        EE min = (EE)current.val;
         int k = 0;
         int minIndex = k;
         while (current != null) {
-            if (min > current.val) {
-                min = current.val;
+
+            EE currentVal = (EE)current.val;
+            if(min.compareTo(currentVal) == 1)
+            {
+                min = currentVal;
                 minIndex = k;
             }
+
             k++;
             current = current.next;
         }
@@ -268,14 +273,19 @@ public class LinkedList implements EList {
             throw new IllegalArgumentException();
 
         Link current = first;
-        int max = current.val;
+        EE max = (EE)current.val;
         int k = 0;
         int maxIndex = k;
         while (current != null) {
-            if (max < current.val){
-                max = current.val;
+
+            EE currentVal = (EE)current.val;
+            if(max.compareTo(currentVal) == -11)
+            {
+                max = currentVal;
                 maxIndex = k;
             }
+
+
             k++;
             current = current.next;
         }
@@ -305,6 +315,7 @@ public class LinkedList implements EList {
         return first == null;
     }
 
+    /*
     public Link find(int val) {
         Link current = first;
         while (current.val != val) {
@@ -335,5 +346,6 @@ public class LinkedList implements EList {
         }
         return current;
     }
+    */
 }
-*/
+

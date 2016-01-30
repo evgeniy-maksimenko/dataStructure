@@ -1,13 +1,12 @@
-import gontsov.linkedLists.DoublyLinkedList;
 import gontsov.EList;
-//import gontsov.linkedLists.LinkedList;
+import gontsov.linkedLists.LinkedList;
+//import gontsov.linkedLists.DoublyLinkedList;
 import gontsov.lists.AList0;
 import gontsov.lists.AList1;
 import gontsov.lists.AList2;
+import org.junit.runners.Parameterized;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
-
 import java.util.Arrays;
 import java.util.Collection;
 
@@ -26,7 +25,7 @@ public class AlistTest {
                 {new AList0()},
                 {new AList1()},
                 {new AList2()},
-//                {new LinkedList()},
+                {new LinkedList()},
 //                {new DoublyLinkedList()}
         });
     }
